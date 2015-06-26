@@ -44,29 +44,36 @@ Ext.define('HMSDD.view.WidgetsPanel', {
     },{
         xtype: 'numberfield',
         fieldLabel: 'Number',
-        value: '1.2'
+        value: '1.2',
+        hideTrigger: true,
     },{
         xtype: 'datefield',
         fieldLabel: 'Date',
         //value: new Date()
-    },
-    {
+    },{
         xtype:'checkbox',
         fieldLabel: 'Check Box',
         name: 'checkbox'
-    },
-    {
+    },{
     	xtype: 'combobox',
         fieldLabel: 'Combo',
         name: 'uxcombo'
-    },
-    {
+    },{
+    	xtype: 'fieldcontainer',
+	    fieldLabel: 'Container',
+	    layout: 'vbox',
+	    combineErrors: true,
+	    //hideLabel: 'true',
+	    style: {
+	        width: 50,
+	        height: 100	
+       	},
+   },{
     	xtype: 'fieldset',
     	height: 50,
     	//width: 50,
     	title: 'Container'
-    },
-    {
+    },{
     	xtype: 'panel',
     	height: 50,    	
     	title: 'Block',

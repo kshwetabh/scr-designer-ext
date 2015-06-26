@@ -12,8 +12,7 @@ Ext.define('HMSDD.view.Main', {
         type: 'border',
         padding: 5
     },
-
-	layout:'border',
+    
 	defaults: {
 	    collapsible: true,
 	    split: true,
@@ -25,7 +24,14 @@ Ext.define('HMSDD.view.Main', {
 	    height: 150,
 	    minSize: 75,
 	    maxSize: 250,
-	    cmargins: '5 0 0 0'
+	    cmargins: '5 0 0 0',
+	    items: [{
+	    	xtype: 'container',
+	    	itemId: 'log',
+	    	width: '100%',
+	    	height: '100%'
+	    }],
+	    //bodyStyle:{"background-color":"black"},
 	},{
 	    title: 'Widgets',
 	    region:'west',
@@ -51,13 +57,16 @@ Ext.define('HMSDD.view.Main', {
 	    	}
 	    }],
 		tbar: [{
-			text: 'Screen Config'
+			text: 'Screen Config',
+			itemId: 'screenconfig'
 		},'-',{
 			text: 'Generate Code',
-	    	iconCls: 'icon-send'
+	    	iconCls: 'cut',
+			itemId: 'generatecode'
 		},'-',{
 			text: 'Reset',
-		    iconCls: 'icon-save'
+		    iconCls: 'icon-save',
+			itemId: 'reset'
 		}
 		    /*,{
 		         text: 'Check Spelling',
@@ -67,7 +76,8 @@ Ext.define('HMSDD.view.Main', {
 		         iconCls: 'icon-print'
 		    }*/,'->',{
 		         text: 'Help',
-		         iconCls: 'icon-help'
+		         iconCls: 'icon-help',
+		         itemId: 'help'
 		}]
 	}]
 	     
