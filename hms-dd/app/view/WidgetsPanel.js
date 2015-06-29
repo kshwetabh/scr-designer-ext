@@ -48,8 +48,7 @@ Ext.define('HMSDD.view.WidgetsPanel', {
         hideTrigger: true,
     },{
         xtype: 'datefield',
-        fieldLabel: 'Date',
-        //value: new Date()
+        fieldLabel: 'Date'
     },{
         xtype:'checkbox',
         fieldLabel: 'Check Box',
@@ -59,23 +58,16 @@ Ext.define('HMSDD.view.WidgetsPanel', {
         fieldLabel: 'Combo',
         name: 'uxcombo'
     },{
-    	xtype: 'fieldcontainer',
-	    fieldLabel: 'Container',
-	    layout: 'vbox',
-	    combineErrors: true,
-	    //hideLabel: 'true',
-	    style: {
-	        width: 50,
-	        height: 100	
-       	},
-   },{
-    	xtype: 'fieldset',
-    	height: 50,
-    	//width: 50,
-    	title: 'Container'
+        xtype: 'container',
+        style: "width:50px;background-color:rgba(152, 200, 255, 0.1);border:'red dotted 1px';",
+        html: 'cont',
+        minwidth: 100,
+        width: 200,
+        height:50
     },{
     	xtype: 'panel',
-    	height: 50,    	
+    	height: 50,
+    	width: 800,
     	title: 'Block',
     	collapsible: true,
     	animCollapse: false,
@@ -87,14 +79,7 @@ Ext.define('HMSDD.view.WidgetsPanel', {
         height: 30,
         text: 'Button'
     },
-    {
-        xtype: 'container',
-        style: "width:50px;background-color:rgba(152, 200, 255, 0.1);",	
-        
-        minwidth: 100,
-        height:50,
-        
-    },
+    
     
     ]
 });

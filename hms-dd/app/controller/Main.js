@@ -27,36 +27,35 @@ Ext.define('HMSDD.controller.Main', {
 		var me = this,
 			overrides = {},
 		    childComponents = Ext.ComponentQuery.query('widgetspanel>*');
-		    
-		console.log(childComponents);
+		
 		Ext.each(childComponents, function(component) {
-			me.attachDragZone(component, 'ddGroup');
+			me.attachDragZone(component, 'ddGroup', true);
 		}, me);
 	},
 	
-	attachDragZone: function (component, ddGrp) {
+	attachDragZone: function (component, ddGrp, isClone) {
 		return component.DragZone = Ext.create('Ext.dd.DragZone', component.getEl(), {
 				// Override the getDragData function
 				// Notice that we used the component element dom rather that the
 				// dom returned by the event. This is to get uniform behavior for
 				// containers
 				getDragData : function(e) {
-					var compEl = component.getEl(),
-					    cloneEl;
-
-					// Clone the dom element
-					cloneEl = compEl.dom.cloneNode(true);
-					// generate an new Id
-					cloneEl.id = Ext.id();
-
+					if (isClone) {
+						var compEl = component.getEl(),
+						    cloneEl;
+	
+						// Clone the dom element
+						cloneEl = compEl.dom.cloneNode(true);
+						// generate an new Id
+						cloneEl.id = Ext.id();
+					}
 					// We must return ddel, repairXY is a nice feature.
 					// All other data is for the drop zone to consume
 					return {
-						ddel : cloneEl,
+						ddel : isClone ? cloneEl: component.getEl().dom,
 						repairXY : Ext.fly(e.getTarget()).getXY(),
 						componentClone : component.cloneConfig()
 					};
-					console.log("Dragging = " + component.xtype);
 				},
 
 				getRepairXY : function() {
@@ -83,7 +82,7 @@ Ext.define('HMSDD.controller.Main', {
 				component.add(data.componentClone);
 				console.log("Dropping = " + data.componentClone.xtype);
 				
-				me.attachDragZone(data.componentClone, 'ddGroup');
+				me.attachDragZone(data.componentClone, 'ddGroup', false);
 			},
 			//ddGroup : (component.xtype == 'container' ||  component.xtype == 'panel') ? 'ddContainerGroup' : 'ddGroup'
 			ddGroup : 'ddGroup'
@@ -109,7 +108,7 @@ Ext.define('HMSDD.controller.Main', {
 
 	generateCode : function (tool) {
 		//Get all components inside the screendesigner view
-		var sDComponents = Ext.ComponentQuery.query('screendesigner>*'), //TODO: look for a better way to locate the SD View
+		var sDComponents = Ext.ComponentQuery.query('screendesigner>container>*'), //TODO: look for a better way to locate the SD View
 			logPanel = Ext.ComponentQuery.query('#log')[0],
 			msg = '';
 		
@@ -125,7 +124,7 @@ Ext.define('HMSDD.controller.Main', {
 			if (choice === 'yes') {
 				console.log('yes');
 				//delete all the components inside the screendesigner
-				var sDComponents = Ext.ComponentQuery.query('screendesigner')[0];
+				var sDComponents = Ext.ComponentQuery.query('screendesigner>container')[0];
 				if(sDComponents) {
 					sDComponents.items.each(function(item, index, len) {
 			            this.remove(item, true); //and remove from DOM !

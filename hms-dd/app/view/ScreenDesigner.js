@@ -3,31 +3,38 @@ Ext.define('HMSDD.view.ScreenDesigner', {
 	xtype : 'screendesigner',
 
 	requires : ['Ext.resizer.Resizer'],
-
-	layout : {
-		type : 'table',
-		columns : 4,
-		//shrinkWrap: false,
-		tdAttrs : {
-			style : {
-				colspan: 2
-			}
-		}
+	layout: {
+		type: 'fit'
 	},
-
-	defaults : {
-		border : 1,
-		style : {
-			outline : 'red dotted 1px',
-			outlineOffset : '5px'
-		},
-		margin : 10,
-		padding : 5		
-	},
-
+	style : {
+				outline : 'red dotted 1px',
+				outlineOffset : '5px'
+			},
+	
 	items : [{
 		xtype : 'container',
-		width: '100%',
-		height: '100%'
+		width: 800,
+		height: 600,
+		
+		defaults : {
+			border : 1,
+			style : {
+				outline : 'red dotted 1px',
+				outlineOffset : '5px'
+			},
+			margin : 10,
+			padding : 5		
+		},
+		
+		layout: {
+			type : 'table',
+			columns : 4,
+			//shrinkWrap: false,
+			tdAttrs : {
+				style : {
+					colspan: 2
+				}
+			}
+		}
 	}]
 }); 
