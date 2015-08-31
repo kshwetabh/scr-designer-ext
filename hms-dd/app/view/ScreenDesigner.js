@@ -13,6 +13,7 @@ Ext.define('HMSDD.view.ScreenDesigner', {
 	
 	items : [{
 		xtype : 'container',
+		itemId: 'designerContainer',
 		width: 800,
 		height: 600,
 		

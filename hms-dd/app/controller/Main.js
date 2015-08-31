@@ -14,6 +14,12 @@ Ext.define('HMSDD.controller.Main', {
 			'screendesigner>container': {
 				afterrender: this.initDropInContainer
 			},
+			'screendesigner>container>container': {
+				//added: this.onContainerDropped
+			},
+			'screendesigner>container>panel': {
+				//added: this.onPanelDropped
+			},
 			'toolbar #generatecode': {
 				click: this.generateCode
 			},
@@ -54,15 +60,16 @@ Ext.define('HMSDD.controller.Main', {
 					return {
 						ddel : isClone ? cloneEl: component.getEl().dom,
 						repairXY : Ext.fly(e.getTarget()).getXY(),
-						componentClone : component.cloneConfig()
+						componentClone : component.cloneConfig(),
+						origComponent: component
 					};
 				},
 
 				getRepairXY : function() {
 					return this.dragData.repairXY;
 				},
-				//ddGroup : (component.xtype == 'container' ||  component.xtype == 'panel') ? 'ddContainerGroup' : 'ddGroup'
-				ddGroup : ddGrp
+				ddGroup : (component.xtype == 'container' ||  component.xtype == 'panel') ? 'ddContainerGroup' : 'ddGroup'
+				//ddGroup : ddGrp
 			});
 	},
 
@@ -80,16 +87,42 @@ Ext.define('HMSDD.controller.Main', {
 			// the component via the supplied component clone
 			onNodeDrop : function(target, dd, e, data) {
 				component.add(data.componentClone);
-				console.log("Dropping = " + data.componentClone.xtype);
 				
+				//Remove the original component if rearranged inside ScreenDesigner panel
+				component.remove(data.origComponent);
+				
+				//make the new component draggable inside the Screendesigner panel also
 				me.attachDragZone(data.componentClone, 'ddGroup', false);
 			},
 			//ddGroup : (component.xtype == 'container' ||  component.xtype == 'panel') ? 'ddContainerGroup' : 'ddGroup'
-			ddGroup : 'ddGroup'
+			ddGroup : 'ddContainerGroup'
 		});
 		
 	},
 
+	onPanelDropped: function (component) {
+		console.log('Panel Dropped');
+	},
+	onContainerDropped: function(component) {
+		console.log('Container Dropped');
+		
+		component.dropZone = Ext.create("Ext.dd.DropZone", component, {
+			// Tell the zone what our target component is
+			getTargetFromEvent : function(event) {
+				return component;
+			},
+			// When the node is dropped, add a new instance to the
+			// the component via the supplied component clone
+			onNodeDrop : function(target, dd, e, data) {
+				//component.add(data.componentClone);
+			},
+			//ddGroup : (component.xtype == 'container' ||  component.xtype == 'panel') ? 'ddContainerGroup' : 'ddGroup'
+			ddGroup : 'ddGroup'
+		});
+		if (component.dropZone) {
+			//component.dropZone.addToGroup('ddGroup');
+		}
+	},
 
 	/*initDrop : function (component) {
 		component.dropZone = Ext.create("Ext.dd.DropZone", component.getEl(), {
